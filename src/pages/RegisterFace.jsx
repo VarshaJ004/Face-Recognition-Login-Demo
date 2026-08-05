@@ -4,6 +4,7 @@ import * as faceapi from "face-api.js";
 
 function RegisterFace() {
   const webcamRef = useRef(null);
+  const imageRef = useRef(null);
 
   const [capturedImage, setCapturedImage] = useState(null);
   const [name, setName] = useState("");
@@ -49,7 +50,7 @@ function RegisterFace() {
     console.log("📸 Image Captured");
   };
 
-  const registerFace = () => {
+  const registerFace = async () => {
     if (!name) {
       alert("Please enter your name.");
       return;
@@ -60,12 +61,30 @@ function RegisterFace() {
       return;
     }
 
+    const detection = await faceapi
+      .detectSingleFace(
+        imageRef.current,
+        new faceapi.TinyFaceDetectorOptions()
+      )
+      .withFaceLandmarks()
+      .withFaceDescriptor();
+
+    if (!detection) {
+      alert("Face not detected.");
+      return;
+    }
+
     const user = {
       name: name,
-      image: capturedImage,
+      descriptor: Array.from(detection.descriptor),
     };
 
-    localStorage.setItem("registeredUser", JSON.stringify(user));
+    localStorage.setItem(
+      "registeredUser",
+      JSON.stringify(user)
+    );
+
+    console.log(user);
 
     alert("✅ Face Registered Successfully!");
   };
@@ -123,6 +142,7 @@ function RegisterFace() {
           <h3>Captured Image</h3>
 
           <img
+            ref={imageRef}
             src={capturedImage}
             alt="Captured Face"
             width="300"
