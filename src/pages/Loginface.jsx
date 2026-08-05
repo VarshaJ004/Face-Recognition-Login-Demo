@@ -1,4 +1,4 @@
-function FaceLogin() {
+function Loginface() {
     return (
       <div style={{ textAlign: "center", marginTop: "100px" }}>
         <h1>Login with Face</h1>
@@ -8,4 +8,4 @@ function FaceLogin() {
     );
   }
   
-  export default FaceLogin;
+  export default Loginface;

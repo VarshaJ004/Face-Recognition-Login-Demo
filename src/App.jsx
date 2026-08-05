@@ -1,15 +1,22 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Home from "./pages/Home";
-import FaceLogin from "./pages/Loginface";
 import RegisterFace from "./pages/RegisterFace";
 
+import Dashboard from "./pages/Dashboard";
+import FaceLogin from "./pages/Loginface";
+import Loginface from "./pages/Loginface";
 
 function App() {
   return (
-   <>
-  <Home />
-  <RegisterFace />  
-  <FaceLogin />
-   </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<RegisterFace />} />
+        <Route path="/login" element={<Loginface />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
